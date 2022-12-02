@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <h2 v-if="winner">the Winner is : {{ winner }} score plus {{blockLeft}}</h2>
-    <h2 v-else-if="player ==='-' ">Press the first block to remove.</h2>
-    <h2 v-else-if="blockLeft === 0 ">The game is end no player win.</h2>
-    <h2 v-else >Player "{{ player }}" move.</h2>
+    <h2 v-if="winner">the Winner is : {{ winner }}</h2>
+    <h2 v-else-if="blockLeft === 0">The game is end no player win.</h2>
+    <h2 v-else>Player "{{ player }}" move.</h2>
     <button @click="reset" class="btn btn-success mb-3">Reset</button>
     <div v-for="(z, x) in 4" :key="x" class="row">
+      {{ (squares[randomX][randomY] = "-") }}
       <button v-for="(z, y) in 4" :key="y" @click="move(x, y)" class="square">
         {{ squares[x][y] }}
       </button>
     </div>
   </div>
-  <div class ="score">
+  <div class="score">
     <h1>Score</h1>
     <h3>Player X : {{ scorePlayer1 }}</h3>
     <h3>Player O : {{ scorePlayer2 }}</h3>
@@ -39,11 +39,10 @@
 .score {
   margin: auto;
 }
-
 </style>
 <!-- ///////////////////////////////////////////// -->
 <script>
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch } from "vue";
 const Winner = (squares) => {
   const lines = [
     [0, 1, 2, 3],
@@ -57,6 +56,10 @@ const Winner = (squares) => {
     [0, 5, 10, 15],
     [3, 6, 9, 12],
   ];
+
+  // squares[0] = lines[0][0]
+  // console.log(squares)
+
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c, d] = lines[i];
     if (
@@ -71,31 +74,55 @@ const Winner = (squares) => {
 };
 export default {
   setup() {
-    const blockLeft = ref(16);
-    const player = ref("-");
+    const blockLeft = ref(15);
+    const player = ref("X");
     const squares = ref([
       ["", "", "", ""],
       ["", "", "", ""],
       ["", "", "", ""],
       ["", "", "", ""],
     ]);
-    const winner = computed(() => Winner(squares.value.flat()));
+    // min = Math.ceil(1);
+    // max = Math.floor(16);
+    // const firstBlock = () => {
+    //   const ran = [
+    //     [1, 2, 3, 4],
+    //     [5, 6, 7, 8],
+    //     [9, 10, 11, 12],
+    //     [13, 14, 15, 16]
+    //   ]
+    //   for (let i =0; i < ran.length; i++){
+    //     if (i === random){
+
+    //     }
+    //   }
+
+    // }
+
+    const winner = computed({
+      get: () => Winner(squares.value.flat()),
+      set: () => (squares.value.flat()[0] = "-"),
+    });
+    console.log(winner);
+
+    const randomX = computed(() => Math.floor(Math.random() * (4 - 0) + 0));
+    const randomY = computed(() => Math.floor(Math.random() * (4 - 0) + 0));
+
     const move = (x, y) => {
       if (winner.value) return;
 
       if (squares.value[x][y] !== "") return;
-        
-      
 
       squares.value[x][y] = player.value;
-      player.value = player.value === "X" ? "O" : "X";
+      player.value = player.value === "O" ? "X" : "O";
       blockLeft.value -= 1;
       console.log(blockLeft);
+      console.log(blockLeft.value);
     };
 
     const reset = () => {
-      blockLeft.value = 16;
-      player.value = "-";
+      blockLeft.value = 15;
+      player.value = "X";
       squares.value = [
         ["", "", "", ""],
         ["", "", "", ""],
@@ -124,6 +151,8 @@ export default {
       scorePlayer1,
       scorePlayer2,
       blockLeft,
+      randomX,
+      randomY,
     };
   },
 };
