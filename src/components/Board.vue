@@ -3,18 +3,19 @@
     <h2 v-if="winner">the Winner is : {{ winner }}</h2>
     <h2 v-else-if="blockLeft === 0">The game is end no player win.</h2>
     <h2 v-else>Player "{{ player }}" move.</h2>
-    <button @click="reset" class="btn btn-success mb-3">Reset</button>
+    <button @click="reset" class="btn btn-success mb-3">Reset board</button>
     <div v-for="(z, x) in 4" :key="x" class="row">
-      {{ (squares[randomX][randomY] = "-") }}
       <button v-for="(z, y) in 4" :key="y" @click="move(x, y)" class="square">
         {{ squares[x][y] }}
       </button>
     </div>
+    {{ (squares[randomX][randomY] = "-") }}
   </div>
   <div class="score">
     <h1>Score</h1>
-    <h3>Player X : {{ scorePlayer1 }}</h3>
-    <h3>Player O : {{ scorePlayer2 }}</h3>
+    <h3>Player X scores: {{ winX }}</h3>
+    <h3>Player O scores: {{ winY }}</h3>
+    <button @click="resetScore" class="btn btn-success mb-3">Reset Score.</button>
   </div>
   <h2 style="color: red">BLOCK LEFT: {{ blockLeft }}</h2>
 </template>
@@ -39,10 +40,19 @@
 .score {
   margin: auto;
 }
+h1,
+h2,
+h3,
+h4 {
+  color: white;
+}
+#app {
+  background-color: rgb(0, 0, 0);
+}
 </style>
 <!-- ///////////////////////////////////////////// -->
 <script>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 const Winner = (squares) => {
   const lines = [
     [0, 1, 2, 3],
@@ -82,31 +92,14 @@ export default {
       ["", "", "", ""],
       ["", "", "", ""],
     ]);
-    // min = Math.ceil(1);
-    // max = Math.floor(16);
-    // const firstBlock = () => {
-    //   const ran = [
-    //     [1, 2, 3, 4],
-    //     [5, 6, 7, 8],
-    //     [9, 10, 11, 12],
-    //     [13, 14, 15, 16]
-    //   ]
-    //   for (let i =0; i < ran.length; i++){
-    //     if (i === random){
-
-    //     }
-    //   }
-
-    // }
 
     const winner = computed({
       get: () => Winner(squares.value.flat()),
-      set: () => (squares.value.flat()[0] = "-"),
     });
-    console.log(winner);
 
-    const randomX = computed(() => Math.floor(Math.random() * (4 - 0) + 0));
-    const randomY = computed(() => Math.floor(Math.random() * (4 - 0) + 0));
+    var sumX = 0;
+    let randomX = Math.floor(Math.random() * (4 - 0) + 0);
+    let randomY = Math.floor(Math.random() * (4 - 0) + 0);
 
     const move = (x, y) => {
       if (winner.value) return;
@@ -117,10 +110,18 @@ export default {
       player.value = player.value === "O" ? "X" : "O";
       blockLeft.value -= 1;
       console.log(blockLeft);
-      console.log(blockLeft.value);
+    };
+
+    const resetScore = () => {
+      localStorage.clear();
+      window.location.reload();
     };
 
     const reset = () => {
+      window.location.reload();
+      randomX = Math.floor(Math.random() * (4 - 0) + 0);
+      randomY = Math.floor(Math.random() * (4 - 0) + 0);
+      console.log(randomX);
       blockLeft.value = 15;
       player.value = "X";
       squares.value = [
@@ -129,17 +130,31 @@ export default {
         ["", "", "", ""],
         ["", "", "", ""],
       ];
+
     };
+
+    const winX = ref(0);
+    const winY = ref(0);
     const scorePlayer1 = ref(0);
     const scorePlayer2 = ref(0);
-    watch(winner, (currentWinner) => {
-      if (currentWinner) {
+    watch(winner, (currentWinner, previous) => {
+      if (currentWinner && !previous) {
         if (currentWinner === "X") {
           scorePlayer1.value += blockLeft.value;
+          winX.value += scorePlayer1.value;
+          localStorage.setItem("winX", JSON.stringify(winX.value));
         } else {
           scorePlayer2.value += blockLeft.value;
+          winY.value += scorePlayer2.value;
+          localStorage.setItem("winY", JSON.stringify(winY.value));
         }
       }
+    });
+
+    onMounted(() => {
+      winX.value = JSON.parse(localStorage.getItem("winX"));
+      winY.value = JSON.parse(localStorage.getItem("winY"));
+      // console.log(winY.value)
     });
 
     return {
@@ -148,11 +163,14 @@ export default {
       squares,
       move,
       reset,
+      resetScore,
       scorePlayer1,
       scorePlayer2,
       blockLeft,
       randomX,
       randomY,
+      winX,
+      winY,
     };
   },
 };
