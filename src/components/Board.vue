@@ -3,14 +3,14 @@
     <div class="header">TIC TAC TOE GAMES</div>
   </header>
   <div class="bigblock">
+    <h2 v-if="winner && blockLeft === 0">
+      the Winner is : {{ winner }} but no score.
+    </h2>
+    <h2 v-else-if ="winner">the Winner is : {{ winner }}</h2>
+    <h2 v-else-if="blockLeft === 0">The game is end no player win.</h2>
+    <h2 v-else>Player "{{ player }}" move.</h2>
+    <button @click="reset" class="buttonBoard">Reset board</button>
     <div class="container">
-      <h2 v-if="winner && blockLeft === 0">
-        the Winner is : {{ winner }} but no score.
-      </h2>
-      <h2 v-else-if="winner">the Winner is : {{ winner }}</h2>
-      <h2 v-else-if="blockLeft === 0">The game is end no player win.</h2>
-      <h2 v-else>Player "{{ player }}" move.</h2>
-      <button @click="reset" class="buttonBoard">Reset board</button>
       <div v-for="(z, x) in 4" :key="x" class="row">
         <button v-for="(z, y) in 4" :key="y" @click="move(x, y)" class="square">
           {{ squares[x][y] }}
@@ -18,8 +18,8 @@
       </div>
 
       {{ (squares[randomX][randomY] = "-") }}
-      <h2 style="color: red">BLOCK LEFT: {{ blockLeft }}</h2>
     </div>
+    <h2 style="color: red">BLOCK LEFT: {{ blockLeft }}</h2>
     <div class="score">
       <h1>Score</h1>
       <h3>Player X scores: {{ winX }}</h3>
@@ -32,22 +32,7 @@
 </template>
 
 <style scoped>
-.square {
-  flex: auto;
-  align-items: center;
-  background: rgb(240, 27, 27);
-  border: 1px solid rgb(120, 89, 231);
-  float: left;
-  font-size: 20px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 40px;
-  margin-right: 2px;
-  margin-top: 2px;
-  padding: 0;
-  text-align: center;
-  width: 100px;
-}
+
 </style>
 <!-- ///////////////////////////////////////////// -->
 <script>

@@ -26,9 +26,10 @@ h4 {
 
 body{
   background-color: rgb(24, 68, 93);
-  margin: auto;
-  width: auto;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .bigblock{
@@ -70,18 +71,103 @@ body{
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
-@media (min-width: 1024px) {
-  body {
-
-    display: flex;
-    place-items: center;
+.square {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background: rgb(240, 27, 27);
+  border: 1px solid rgb(120, 89, 231);
+  float: left;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 40px;
+  margin-right: 2px;
+  margin-top: 2px;
+  padding: 0;
+  text-align: center;
+  width: 100px;
+}
+@media screen and (width: 320px) {
+  .square {
+    width: 25px;
   }
 
-  /* #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  } */
+}
+@media screen and (width: 375.20px) {
+  .square {
+    width: 35px;
+  }
+
+}
+@media screen and (width: 425.60px) {
+  .square {
+    width: 45px;
+  }
+
+}
+@media screen and (width: 912px) and(height: 915px) {
+  .square {
+    width: 50px;
+  }
+
+}
+@media screen and (width: 540px) and (height: 720px) {
+  .square {
+    width: 70px;
+  }
+
+}
+@media screen and (width: 412px) and (height: 915.20px){
+  .square {
+    width: 50px;
+  }
+
+}
+@media screen and (width: 412px) and (height: 914.40px){
+  .square {
+    width: 50px;
+  }
+
+}
+@media screen and (width: 280px) and (height: 653.60px) {
+  .square {
+    width: 20px;
+  }
+
+}
+
+@media screen and (width: 360px) and (height: 740px) {
+  .square {
+    width: 35px;
+  }
+
+}
+@media screen and (width: 414.40px) and (height: 896px) {
+  .square {
+    width: 45px;
+  }
+  
+
+}
+
+@media screen and (width: 393.60px) and (height: 851.20px) {
+  .square {
+    width: 40px;
+  }
+  
+
+}
+@media screen and (width: 390.40px) and (height: 844px) {
+  .square {
+    width: 40px;
+  }
+}
+
+@media screen and (width: 375.20px) and (height: 667.20px) {
+  .square {
+    width: 40px;
+  }
 }
 
 
