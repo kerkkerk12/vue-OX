@@ -1,4 +1,10 @@
 <template>
+  <header>
+    <div class="header">
+      TIC TAC TOE GAMES
+    </div>
+  </header>
+  <body>
   <div class="container">
     <h2 v-if="winner">the Winner is : {{ winner }}</h2>
     <h2 v-else-if="blockLeft === 0">The game is end no player win.</h2>
@@ -9,21 +15,25 @@
         {{ squares[x][y] }}
       </button>
     </div>
-    {{ (squares[randomX][randomY] = "-") }}
+
+    {{ (squares[randomX][randomY] = "-") }} 
   </div>
   <div class="score">
     <h1>Score</h1>
     <h3>Player X scores: {{ winX }}</h3>
     <h3>Player O scores: {{ winY }}</h3>
     <button @click="resetScore" class="btn btn-success mb-3">Reset Score.</button>
+    <h2 style="color: red">BLOCK LEFT: {{ blockLeft }}</h2>
   </div>
-  <h2 style="color: red">BLOCK LEFT: {{ blockLeft }}</h2>
+  
+</body>
 </template>
 
 <style scoped>
 .square {
+  align-items: center;
   background: rgb(240, 27, 27);
-  border: 1px solid #999;
+  border: 1px solid rgb(120, 89, 231);
   float: left;
   font-size: 70px;
   font-weight: bold;
@@ -36,24 +46,11 @@
   width: 100px;
 }
 </style>
-<style>
-.score {
-  margin: auto;
-}
-h1,
-h2,
-h3,
-h4 {
-  color: white;
-}
-#app {
-  background-color: rgb(0, 0, 0);
-}
-</style>
 <!-- ///////////////////////////////////////////// -->
 <script>
 import { ref, computed, watch, onMounted } from "vue";
-const Winner = (squares) => {
+// function check who is the winner
+const Winner = (squares) => {   
   const lines = [
     [0, 1, 2, 3],
     [4, 5, 6, 7],
@@ -63,12 +60,11 @@ const Winner = (squares) => {
     [1, 5, 9, 13],
     [2, 6, 10, 14],
     [3, 7, 11, 15],
-    [0, 5, 10, 15],
-    [3, 6, 9, 12],
+    [0, 5, 10, 15],                    //diagonal line
+    [3, 6, 9, 12],                     //diagonal line
   ];
 
-  // squares[0] = lines[0][0]
-  // console.log(squares)
+
 
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c, d] = lines[i];
@@ -83,6 +79,7 @@ const Winner = (squares) => {
   }
 };
 export default {
+  // setup player and board
   setup() {
     const blockLeft = ref(15);
     const player = ref("X");
@@ -97,13 +94,11 @@ export default {
       get: () => Winner(squares.value.flat()),
     });
 
-    var sumX = 0;
     let randomX = Math.floor(Math.random() * (4 - 0) + 0);
     let randomY = Math.floor(Math.random() * (4 - 0) + 0);
 
     const move = (x, y) => {
       if (winner.value) return;
-
       if (squares.value[x][y] !== "") return;
 
       squares.value[x][y] = player.value;
@@ -119,8 +114,7 @@ export default {
 
     const reset = () => {
       window.location.reload();
-      randomX = Math.floor(Math.random() * (4 - 0) + 0);
-      randomY = Math.floor(Math.random() * (4 - 0) + 0);
+
       console.log(randomX);
       blockLeft.value = 15;
       player.value = "X";
