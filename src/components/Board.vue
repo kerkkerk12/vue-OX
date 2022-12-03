@@ -31,9 +31,6 @@
   </div>
 </template>
 
-<style scoped>
-
-</style>
 <!-- ///////////////////////////////////////////// -->
 <script>
 import { ref, computed, watch, onMounted } from "vue";
