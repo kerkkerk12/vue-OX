@@ -7,9 +7,11 @@
   font-weight: normal;
 }
 
-
+.blockLeft {
+  padding-left: 200px;
+}
 .score {
-  padding-left: 20px;
+  margin-top: 100px;
   text-align: center;
 }
 h1,
@@ -71,19 +73,27 @@ body{
 }
 
 .square {
-  justify-content: center;
-  display: flex;
-  align-items: center;
   background: rgb(240, 27, 27);
   border: 1px solid rgb(120, 89, 231);
   float: left;
   font-size: 20px;
   font-weight: bold;
-  line-height: 34px;
-  height: 40px;
+  line-height: 10px;
+  height: 30px;
   margin-right: 2px;
   margin-top: 2px;
-  padding: 0;
-  text-align: center;
-  width: 100px;
+  width: 40px;
+}
+
+.row {
+  width: 200px;
+}
+
+@media only screen and (max-width: 100px) {
+  .square {
+      width: 35px;
+    }
+  .row {
+      width: 50px;
+  }
 }

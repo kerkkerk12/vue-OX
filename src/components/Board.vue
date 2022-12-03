@@ -19,7 +19,9 @@
 
       {{ (squares[randomX][randomY] = "-") }}
     </div>
-    <h2 style="color: red">BLOCK LEFT: {{ blockLeft }}</h2>
+    <div class="blockLeft">
+      <h2 style="color: red ">BLOCK LEFT: {{ blockLeft }}</h2>
+    </div>
     <div class="score">
       <h1>Score</h1>
       <h3>Player X scores: {{ winX }}</h3>
