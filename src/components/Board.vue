@@ -10,7 +10,7 @@
       <h2 v-else-if="winner">the Winner is : {{ winner }}</h2>
       <h2 v-else-if="blockLeft === 0">The game is end no player win.</h2>
       <h2 v-else>Player "{{ player }}" move.</h2>
-      <button @click="reset" class="btn btn-success mb-3">Reset board</button>
+      <button @click="reset" class="buttonBoard">Reset board</button>
       <div v-for="(z, x) in 4" :key="x" class="row">
         <button v-for="(z, y) in 4" :key="y" @click="move(x, y)" class="square">
           {{ squares[x][y] }}
@@ -24,7 +24,7 @@
       <h1>Score</h1>
       <h3>Player X scores: {{ winX }}</h3>
       <h3>Player O scores: {{ winY }}</h3>
-      <button @click="resetScore" class="btn btn-success mb-3">
+      <button @click="resetScore" class="buttonScore">
         Reset Score.
       </button>
     </div>

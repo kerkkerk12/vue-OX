@@ -35,13 +35,40 @@ body{
   background-color: rgb(0, 0, 0);
   margin: auto;
   width: auto;
-  padding: 20px;
+  padding: 40px;
 }
 
 .container {
-  padding: 20px;
+  text-align: center;
+
+}
+.buttonScore {
+  transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  background-color: #008CBA;
+  color: rgb(11, 6, 6);
+
 }
 
+.buttonScore:hover {
+  background-color: #22641b;
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.buttonBoard {
+  transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  background-color: #00ba1c;
+  color: rgb(11, 6, 6);
+
+}
+
+.buttonBoard:hover {
+  background-color: #ff0099;
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
 
 @media (min-width: 1024px) {
   body {
