@@ -50,7 +50,7 @@ const Winner = (squares) => {
     [0, 5, 10, 15], //diagonal line
     [3, 6, 9, 12], //diagonal line
   ];
-
+  //check vertical horizontal and diagonal line
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c, d] = lines[i];
     if (
@@ -74,33 +74,33 @@ export default {
       ["", "", "", ""],
       ["", "", "", ""],
     ]);
-
+    //getter function that pass the squares value by create array with all suparray to Winner and with reactive data to the computed prop.
     const winner = computed({
       get: () => Winner(squares.value.flat()),
     });
-
+    //random position x y to remove block with the "-"
     let randomX = Math.floor(Math.random() * (4 - 0) + 0);
     let randomY = Math.floor(Math.random() * (4 - 0) + 0);
 
-    const move = (x, y) => {
+    const move = (x, y) => { //get key x and y check condition -> player then switch X O of player value
       if (winner.value) return;
       if (squares.value[x][y] !== "") return;
 
       squares.value[x][y] = player.value;
       player.value = player.value === "O" ? "X" : "O";
-      blockLeft.value -= 1;
-      console.log(blockLeft);
+      blockLeft.value -= 1; //block remove
+      // console.log(blockLeft);
     };
 
-    const resetScore = () => {
+    const resetScore = () => { //reset scores
       localStorage.clear();
       window.location.reload();
     };
 
-    const reset = () => {
+    const reset = () => {   //reset board
       window.location.reload();
 
-      console.log(randomX);
+      // console.log(randomX);
       blockLeft.value = 15;
       player.value = "X";
       squares.value = [
@@ -110,7 +110,7 @@ export default {
         ["", "", "", ""],
       ];
     };
-
+    //when winner check who is then add score to the blockleft value and localstorage
     const winX = ref(0);
     const winY = ref(0);
     const scorePlayer1 = ref(0);
@@ -128,7 +128,7 @@ export default {
         }
       }
     });
-
+    //use the lifecycle hook to get the callback item when has been mounted parse the JSON TO WIN VALUE
     onMounted(() => {
       winX.value = JSON.parse(localStorage.getItem("winX"));
       winY.value = JSON.parse(localStorage.getItem("winY"));
