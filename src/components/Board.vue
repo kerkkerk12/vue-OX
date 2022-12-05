@@ -113,17 +113,14 @@ export default {
     //when winner check who is then add score to the blockleft value and localstorage
     const winX = ref(0);
     const winY = ref(0);
-    const scorePlayer1 = ref(0);
-    const scorePlayer2 = ref(0);
+
     watch(winner, (currentWinner, previous) => {
       if (currentWinner && !previous) {
         if (currentWinner === "X") {
-          scorePlayer1.value += blockLeft.value;
-          winX.value += scorePlayer1.value;
+          winX.value += blockLeft.value;
           localStorage.setItem("winX", JSON.stringify(winX.value));
         } else {
-          scorePlayer2.value += blockLeft.value;
-          winY.value += scorePlayer2.value;
+          winY.value += blockLeft.value;
           localStorage.setItem("winY", JSON.stringify(winY.value));
         }
       }
@@ -142,8 +139,6 @@ export default {
       move,
       reset,
       resetScore,
-      scorePlayer1,
-      scorePlayer2,
       blockLeft,
       randomX,
       randomY,
